@@ -244,6 +244,32 @@ layout (set = 0, binding = 1) uniform sampler s_LinearClamp;
 #if defined FSR2_BIND_UAV_SPD_GLOBAL_ATOMIC 
 	layout (set = 1, binding = FSR2_BIND_UAV_SPD_GLOBAL_ATOMIC, r32ui)       coherent uniform uimage2D   rw_spd_global_atomic;
 #endif
+#if defined FSR2_BIND_UAV_DEBUG_OUT
+	layout (set = 1, binding = FSR2_BIND_UAV_DEBUG_OUT, rgba32f)        	 coherent uniform image2D   rw_debug_out;
+#endif
+
+void StoreDEBUG_OUT(FfxInt32x2 iPxPos, FfxFloat32x4 v)
+{
+#if defined(FSR2_BIND_UAV_DEBUG_OUT)
+	imageStore(rw_debug_out, FfxInt32x2(iPxPos), v);
+#endif
+}
+
+void StoreDEBUG_OUT_XY(FfxInt32x2 iPxPos, FfxFloat32x2 v)
+{
+#if defined(FSR2_BIND_UAV_DEBUG_OUT)
+	FfxFloat32x2 ZW = imageLoad(rw_debug_out, iPxPos).zw;
+	imageStore(rw_debug_out, FfxInt32x2(iPxPos), FfxFloat32x4(v, ZW));
+#endif
+}
+
+void StoreDEBUG_OUT_ZW(FfxInt32x2 iPxPos, FfxFloat32x2 v)
+{
+#if defined(FSR2_BIND_UAV_DEBUG_OUT)
+	FfxFloat32x2 XY = imageLoad(rw_debug_out, iPxPos).xy;
+	imageStore(rw_debug_out, FfxInt32x2(iPxPos), FfxFloat32x4(XY, v));
+#endif
+}
 
 FfxFloat32 LoadMipLuma(FfxInt32x2 iPxPos, FfxInt32 mipLevel)
 {

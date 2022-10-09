@@ -75,6 +75,8 @@ struct UIState
     int     m_activeScene = 0;
     bool    m_bAnimateSpotlight = false;
 
+    bool m_Jitter = true;
+
     //
     // WINDOW MANAGEMENT
     //

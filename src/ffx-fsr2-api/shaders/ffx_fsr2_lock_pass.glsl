@@ -37,6 +37,7 @@
 #define FSR2_BIND_SRV_PREPARED_INPUT_COLOR                  1
 #define FSR2_BIND_UAV_LOCK_STATUS                           2
 #define FSR2_BIND_CB_FSR2                                   3
+#define FSR2_BIND_UAV_DEBUG_OUT                             4
 
 #include "ffx_fsr2_callbacks_glsl.h"
 #include "ffx_fsr2_common.h"

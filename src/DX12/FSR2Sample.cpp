@@ -557,7 +557,7 @@ void FSR2Sample::HandleInput(const ImGuiIO& io)
     m_SavedUiValues[m_UIState.m_nUpscaleType].sharpness = m_UIState.sharpening;
     m_SavedUiValues[m_UIState.m_nUpscaleType].useTAA = m_UIState.bUseTAA;
 
-    if (io.KeyCtrl == true)
+    if (io.KeyShift == true)
     {
         if (fnIsKeyTriggered('1'))
         {
@@ -626,7 +626,7 @@ void FSR2Sample::UpdateCamera(Camera& cam, const ImGuiIO& io)
     cam.UpdatePreviousMatrices(); // set previous view matrix
 
     // Sets Camera based on UI selection (WASD, Orbit or any of the GLTF cameras)
-    if ((io.KeyCtrl == false) && (io.MouseDown[0] == true))
+    if ((io.KeyShift == false) && (io.MouseDown[0] == true))
     {
         yaw -= io.MouseDelta.x / 100.f;
         pitch += io.MouseDelta.y / 100.f;
@@ -643,7 +643,7 @@ void FSR2Sample::UpdateCamera(Camera& cam, const ImGuiIO& io)
         distance -= (float)io.MouseWheel / 3.0f;
         distance = std::max<float>(distance, 0.1f);
 
-        bool panning = (io.KeyCtrl == true) && (io.MouseDown[0] == true);
+        bool panning = (io.KeyShift == true) && (io.MouseDown[0] == true);
 
         cam.UpdateCameraPolar(yaw, pitch,
             panning ? -io.MouseDelta.x / 100.0f : 0.0f,
@@ -653,7 +653,7 @@ void FSR2Sample::UpdateCamera(Camera& cam, const ImGuiIO& io)
     else if (m_activeCamera == 1)
     {
         //  WASD
-        cam.SetSpeed(io.KeyCtrl ? 1.0f : 0.01f);
+        cam.SetSpeed(io.KeyShift ? 1.0f : 0.01f);
         cam.UpdateCameraWASD(yaw, pitch, io.KeysDown, io.DeltaTime);
 
         if (m_UIState.m_bHeadBobbing)

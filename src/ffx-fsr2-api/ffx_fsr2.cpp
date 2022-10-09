@@ -24,6 +24,7 @@
 #include <string.h>     // for memset
 #include <cfloat>       // for FLT_EPSILON
 #include "ffx_fsr2.h"
+#define FFX_INTERNAL
 #define FFX_CPU
 #include "shaders/ffx_core.h"
 #include "shaders/ffx_fsr1.h"
@@ -559,7 +560,14 @@ static FfxErrorCode fsr2Dispatch(FfxFsr2Context_Private* context, const FfxFsr2D
         clearJob.clearJobDescriptor.target = context->srvResources[FFX_FSR2_RESOURCE_IDENTIFIER_DILATED_REACTIVE_MASKS];
         context->contextDescription.callbacks.fpScheduleGpuJob(&context->contextDescription.callbacks, &clearJob);
     }
-
+#ifdef FFX_INTERNAL
+        {const float clearValuesToZeroFloat[]{ 0.f, 0.f, 0.f, 0.f };
+        FfxGpuJobDescription clearJob = { FFX_GPU_JOB_CLEAR_FLOAT };
+        memcpy(clearJob.clearJobDescriptor.color, clearValuesToZeroFloat, 4 * sizeof(float));
+        clearJob.clearJobDescriptor.target = context->srvResources[FFX_FSR2_RESOURCE_IDENTIFIER_DEBUG_OUTPUT];
+        context->contextDescription.callbacks.fpScheduleGpuJob(&context->contextDescription.callbacks, &clearJob);
+    }
+#endif
     // Prepare per frame descriptor tables
     const bool isOddFrame = !!(context->resourceFrameIndex & 1);
     const uint32_t currentCpuOnlyTableBase = isOddFrame ? FFX_FSR2_RESOURCE_IDENTIFIER_COUNT : 0;

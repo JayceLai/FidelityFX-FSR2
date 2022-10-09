@@ -42,7 +42,7 @@ FfxFloat32 ComputeSampleDepthClip(FfxInt32x2 iPxSamplePos, FfxFloat32 fPreviousD
     FfxFloat32 fDepthClipFactor = (fDepthDiff > 0) ? ffxSaturate(fRequiredDepthSeparation / fDepthDiff) : 1.0f;
 
 #ifdef _DEBUG
-    rw_debug_out[iPxSamplePos] = FfxFloat32x4(fCurrentDepthViewSpace, fPrevNearestDepthViewSpace, fDepthDiff, fDepthClipFactor);
+    StoreDEBUG_OUT(iPxSamplePos, FfxFloat32x4(fCurrentDepthViewSpace, fPrevNearestDepthViewSpace, fDepthDiff, fDepthClipFactor));
 #endif
 
     return fPreviousDepthBilinearWeight * fDepthClipFactor * ffxLerp(1.0f, DepthClipBaseScale, ffxSaturate(fDepthDiff * fDepthDiff));

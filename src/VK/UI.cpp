@@ -237,6 +237,7 @@ void FSR2Sample::BuildUI()
             }
 
             ImGui::Checkbox("RCAS Sharpening", &m_UIState.bUseRcas);
+            ImGui::Checkbox("Jitter", &m_UIState.m_Jitter);
 
             if (m_UIState.m_nUpscaleType == UPSCALE_TYPE_FSR_2_0) {
                 if (m_UIState.bUseRcas) {

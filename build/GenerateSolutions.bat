@@ -12,6 +12,8 @@ if %errorlevel% NEQ 0 (
     echo    CMake      - Ready.
 ) 
 
+Set VULKAN_SDK="C:/VulkanSDK/1.3.216.0"
+
 :: Check if submodule is initialized (first time) to avoid CMake file not found errors
 if not exist ..\libs\cauldron\common.cmake (
     echo File: common.cmake  doesn't exist in '.\libs\cauldron\'  -  Initializing submodule... 

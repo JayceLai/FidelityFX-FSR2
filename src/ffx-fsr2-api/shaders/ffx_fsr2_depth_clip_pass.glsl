@@ -36,6 +36,9 @@
 #define FSR2_BIND_SRV_DILATED_DEPTH                         2
 #define FSR2_BIND_UAV_DEPTH_CLIP                            3
 #define FSR2_BIND_CB_FSR2                                   4
+#define FSR2_BIND_UAV_DEBUG_OUT								5
+
+// #define _DEBUG
 
 #include "ffx_fsr2_callbacks_glsl.h"
 #include "ffx_fsr2_common.h"

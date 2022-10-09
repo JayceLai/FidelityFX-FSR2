@@ -136,18 +136,19 @@ void UpscaleContext::PreDraw(UIState* pState)
 
     m_frameIndex++;
 
-    if (m_bUseTaa)
+    if (m_bUseTaa && pState->m_Jitter)
     {
         m_index++;
 
         // handle reset and jitter
         const int32_t jitterPhaseCount = ffxFsr2GetJitterPhaseCount(pState->renderWidth, pState->displayWidth);
         ffxFsr2GetJitterOffset(&m_JitterX, &m_JitterY, m_index, jitterPhaseCount);
-
         pState->camera.SetProjectionJitter(2.0f * m_JitterX / (float)pState->renderWidth, -2.0f * m_JitterY / (float)pState->renderHeight);
     }
     else
     {
+        m_JitterX = 0.f;
+        m_JitterY = 0.f;
         pState->camera.SetProjectionJitter(0.f, 0.f);
     }
 }
